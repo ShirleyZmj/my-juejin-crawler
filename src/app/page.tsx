@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import SearchBar from "./components/search-bar";
 import ArticleList from "./components/article-list";
 import { ISearchResult } from "./types/articles";
-import { formatErrorMessage, logServerError } from "./utils/error-handler";
+import { formatErrorMessage } from "./utils/error-handler";
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -30,6 +30,8 @@ export default function Home() {
         },
       });
 
+      console.log("获取文章响应:", response);
+
       if (!response.ok) {
         throw new Error(`获取文章失败: ${response.statusText}`);
       }
@@ -50,8 +52,7 @@ export default function Home() {
 
       setError(null);
     } catch (err) {
-      logServerError("Home", err as Error);
-      // console.error("获取文章出错:", err);
+      console.error("获取文章出错:", err);
       setError(formatErrorMessage(err as Error));
       setArticles([]);
     } finally {

@@ -4,15 +4,15 @@ export const milvusConfig = {
     port: '19530',
     // database: 'default',
     // collection: 'juejin_articles',\\
-    database: 'juejin',
+    database: 'myJuejin',
     collection: 'articles',
     username: '',
     password: '',
     vectorDimension: 1024
   },
   embedding: {
-    url: process.env.AI_URL || 'your-api-url',
-    model: 'text-embedding-3-small',
-    apiKey: process.env.AI_API_KEY || 'your-api-key'  // 实际部署时应使用环境变量
+    url: process.env.NEXT_PUBLIC_AI_URL || 'your-api-url',
+    model: process.env.NEXT_PUBLIC_AI_MODEL || 'text-embedding-3-small',
+    apiKey: process.env.NEXT_PUBLIC_AI_API_KEY || 'your-api-key'  // 实际部署时应使用环境变量
   }
 };

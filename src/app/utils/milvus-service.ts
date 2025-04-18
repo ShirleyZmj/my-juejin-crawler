@@ -1,4 +1,4 @@
-import { MilvusClient } from '@zilliz/milvus2-sdk-node';
+import { ConsistencyLevelEnum, MilvusClient } from '@zilliz/milvus2-sdk-node';
 import { milvusConfig } from './milvus-config';
 import axios from 'axios';
 import { ISearchResult } from '../types/articles';
@@ -102,18 +102,42 @@ export class MilvusService {
       // 将搜索词转换为向量
       const searchVector = await textToVector(searchTerm);
 
-      // 搜索相似向量
+      console.log(searchTerm, "搜索向量:", searchVector);
+
       const searchResults = await this.client.search({
         collection_name: milvusConfig.milvus.collection,
-        data: [searchVector],
-        anns_field: 'title_vector',
-        params: {
-          metric_type: 'COSINE',
-          params: { ef: 64 }
-        },
+        data: [{
+          anns_field: 'title_vector',
+          data: searchVector,
+        }],
+        output_fields: [
+          "id",
+          "rank",
+          "title",
+          "url",
+          "likes",
+          "views",
+          "briefContent"
+        ],
         limit: limit,
-        output_fields: ['rank', 'title', 'url', 'likes', 'views']
+        filter: "",
+        consistency_level: ConsistencyLevelEnum.Bounded
       });
+
+      console.log('searchResults', searchResults);
+
+      // 搜索相似向量
+      // const searchResults = await this.client.search({
+      //   collection_name: milvusConfig.milvus.collection,
+      //   data: [searchVector],
+      //   anns_field: 'title_vector',
+      //   params: {
+      //     metric_type: 'COSINE',
+      //     params: { ef: 64 }
+      //   },
+      //   limit: limit,
+      //   output_fields: ['rank', 'title', 'url', 'likes', 'views', 'briefContent']
+      // });
 
       // 处理搜索结果
       let processedResults: ISearchResult[] = [];
@@ -123,11 +147,12 @@ export class MilvusService {
           return {
             id: result.id || '',
             score: typeof result.score === 'number' ? result.score : 0,
-            rank: result.entity.rank || 0,
-            title: result.entity.title || '',
-            url: result.entity.url || '',
-            likes: result.entity.likes || 0,
-            views: result.entity.views || 0
+            rank: result.rank || 0,
+            title: result.title || '',
+            url: result.url || '',
+            likes: result.likes || 0,
+            views: result.views || 0,
+            briefContent: result.briefContent || ''
           };
         });
       }
@@ -159,6 +184,8 @@ export class MilvusService {
         limit: limit
       });
 
+      console.log("获取所有文章结果:", result);
+
       if (!result.data) {
         return [];
       }
@@ -169,7 +196,8 @@ export class MilvusService {
         title: item.title || '',
         url: item.url || '',
         likes: item.likes || 0,
-        views: item.views || 0
+        views: item.views || 0,
+        briefContent: item.briefContent || ''
       }));
     } catch (error) {
       console.error('获取所有文章失败:', error);
@@ -192,3 +220,4 @@ export class MilvusService {
     }
   }
 }
+

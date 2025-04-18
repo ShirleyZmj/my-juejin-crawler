@@ -37,7 +37,7 @@ export default function SearchBar({
         </div>
         <button
           type="submit"
-          className="absolute right-2.5 bottom-2.5 bg-blue-500 text-white rounded-lg px-4 py-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="absolute right-2.5 bottom-1.5 bg-blue-500 text-white rounded-lg px-4 py-1 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
           搜索
         </button>

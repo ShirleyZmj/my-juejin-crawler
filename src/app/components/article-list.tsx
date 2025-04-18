@@ -48,6 +48,7 @@ export default function ArticleList({
               <h3 className="text-lg font-medium text-blue-600 hover:underline">
                 {article.title}
               </h3>
+              <p className="text-md text-gray-300">{article.briefContent}</p>
 
               <div className="mt-2 flex items-center text-sm text-gray-500">
                 <div className="flex items-center mr-4">
