@@ -38,8 +38,6 @@ export async function GET(request: Request) {
       articles.sort((a: IArticle, b: IArticle) => a.rank - b.rank);
     }
 
-    console.log("搜索结果:", articles);
-
     // 直接返回文章数组
     return NextResponse.json(articles);
   } catch (error) {

@@ -64,7 +64,7 @@ export default function ArticleList({
                 {article.score !== undefined && (
                   <div className="ml-auto">
                     <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                      相关度: {(article.score * 100).toFixed(1)}%
+                      相关度: {(article.score * 100).toFixed(5)}%
                     </span>
                   </div>
                 )}

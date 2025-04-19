@@ -30,8 +30,6 @@ export default function Home() {
         },
       });
 
-      console.log("获取文章响应:", response);
-
       if (!response.ok) {
         throw new Error(`获取文章失败: ${response.statusText}`);
       }

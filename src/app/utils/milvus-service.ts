@@ -102,8 +102,9 @@ export class MilvusService {
       // 将搜索词转换为向量
       const searchVector = await textToVector(searchTerm);
 
-      console.log(searchTerm, "搜索向量:", searchVector);
+      // console.log(searchTerm, "搜索向量:", searchVector);
 
+      // 搜索相似向量
       const searchResults = await this.client.search({
         collection_name: milvusConfig.milvus.collection,
         data: [{
@@ -124,20 +125,7 @@ export class MilvusService {
         consistency_level: ConsistencyLevelEnum.Bounded
       });
 
-      console.log('searchResults', searchResults);
-
-      // 搜索相似向量
-      // const searchResults = await this.client.search({
-      //   collection_name: milvusConfig.milvus.collection,
-      //   data: [searchVector],
-      //   anns_field: 'title_vector',
-      //   params: {
-      //     metric_type: 'COSINE',
-      //     params: { ef: 64 }
-      //   },
-      //   limit: limit,
-      //   output_fields: ['rank', 'title', 'url', 'likes', 'views', 'briefContent']
-      // });
+      // console.log('searchResults', searchResults);
 
       // 处理搜索结果
       let processedResults: ISearchResult[] = [];
