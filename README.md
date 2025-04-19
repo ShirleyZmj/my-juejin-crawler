@@ -4,6 +4,8 @@ English | [中文](./README_CN.md)
 
 A Juejin article browser based on Next.js and Milvus vector database, supporting semantic search for quickly finding relevant Juejin articles.
 
+![Project Screenshot](./screenshot.jpg)
+
 ## Project Overview
 
 This project is a Juejin article search and browsing system that utilizes vector databases to store article information and semantic vectors, implementing semantic search through vector similarity search. Users can search for related articles using keywords and view article details and related information.
